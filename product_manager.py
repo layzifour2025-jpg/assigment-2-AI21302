@@ -104,17 +104,6 @@ def update_product(products):
             product['name'] = input(f"Tên mới ({product['name']}): ") or product['name']
             product['brand'] = input(f"Thương hiệu mới ({product['brand']}): ") or product['brand']
             
-       
-            try:
-                p_input = input(f"Giá mới ({product['price']}): ")
-                if p_input:
-                    product['price'] = int(p_input)
-                
-                q_input = input(f"Số lượng mới ({product['quantity']}): ")
-                if q_input:
-                    product['quantity'] = int(q_input)
-            except ValueError:
-                print("Lỗi nhập liệu số! Giữ nguyên giá trị cũ.")
             # Sử dụng hàm phụ trợ để cập nhật giá và số lượng
             product['price'] = _get_valid_int("Giá mới", product['price'])
             product['quantity'] = _get_valid_int("Số lượng mới", product['quantity'])
