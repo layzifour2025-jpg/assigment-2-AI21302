@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "id": "LT01",
+        "name": "nitro",
+        "brand": "acer",
+        "price": 1000000000,
+        "quantity": 90
+    },
+    {
+        "id": "LT02",
+        "name": "omen",
+        "brand": "hp",
+        "price": 1000000000000,
+        "quantity": 23
+    }
+]
