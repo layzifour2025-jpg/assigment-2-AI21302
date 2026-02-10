@@ -71,7 +71,6 @@ def add_product(products):
     # Tối ưu hóa sinh ID: dùng set để tra cứu nhanh O(1)
     existing_ids = {p['id'] for p in products}
     count = len(products) + 1
-    while new_id in existing_ids:
     while f"LT{count:02d}" in existing_ids:
         count += 1
         new_id = f"LT{count:02d}"
