@@ -64,17 +64,6 @@ def add_product(products):
     name = input("Nhập tên sản phẩm: ")
     brand = input("Nhập thương hiệu: ")
     
-   
-    while True:
-        try:
-            price = int(input("Nhập giá sản phẩm : "))
-            quantity = int(input("Nhập số lượng tồn kho : "))
-            if price < 0 or quantity < 0:
-                print("Giá và số lượng phải lớn hơn hoặc bằng 0.")
-                continue
-            break
-        except Exception:
-            print("Vui lòng nhập con số hợp lệ!")
     # Sử dụng hàm phụ trợ để code gọn và an toàn hơn
     price = _get_valid_int("Nhập giá sản phẩm: ")
     quantity = _get_valid_int("Nhập số lượng tồn kho: ")
