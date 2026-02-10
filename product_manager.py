@@ -73,7 +73,6 @@ def add_product(products):
     count = len(products) + 1
     while f"LT{count:02d}" in existing_ids:
         count += 1
-        new_id = f"LT{count:02d}"
     new_id = f"LT{count:02d}"
 
     new_product = {
