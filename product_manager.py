@@ -2,7 +2,9 @@ import json
 import os
 
 
-DATA_FILE = "products.json"
+# Sử dụng đường dẫn tuyệt đối để đảm bảo file luôn được tìm thấy chính xác
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(BASE_DIR, "products.json")
 
 def load_data():
     """
@@ -32,6 +34,27 @@ def save_data(products):
     except Exception as e:
         print(f"Lỗi khi lưu file: {e}")
 
+def _get_valid_int(prompt, current_value=None):
+    """Hàm phụ trợ để nhập số nguyên hợp lệ (>= 0)."""
+    while True:
+        if current_value is not None:
+            # Chế độ cập nhật: hiển thị giá trị cũ
+            user_input = input(f"{prompt} ({current_value}): ")
+            if user_input.strip() == "":
+                return current_value
+        else:
+            # Chế độ thêm mới
+            user_input = input(prompt)
+            
+        try:
+            value = int(user_input)
+            if value < 0:
+                print(">> Giá trị phải lớn hơn hoặc bằng 0.")
+                continue
+            return value
+        except ValueError:
+            print(">> Vui lòng nhập con số hợp lệ!")
+
 def add_product(products):
     """
     Thêm sản phẩm mới vào danh sách.
@@ -52,16 +75,17 @@ def add_product(products):
             break
         except Exception:
             print("Vui lòng nhập con số hợp lệ!")
+    price = _get_valid_int("Nhập giá sản phẩm: ")
+    quantity = _get_valid_int("Nhập số lượng tồn kho: ")
 
-   
-    new_id = f"LT{len(products) + 1:02d}" 
-    
- 
-    existing_ids = [p['id'] for p in products]
+    # Tối ưu hóa sinh ID: dùng set để tra cứu nhanh O(1)
+    existing_ids = {p['id'] for p in products}
     count = len(products) + 1
     while new_id in existing_ids:
+    while f"LT{count:02d}" in existing_ids:
         count += 1
         new_id = f"LT{count:02d}"
+    new_id = f"LT{count:02d}"
 
     new_product = {
         "id": new_id,
@@ -103,6 +127,9 @@ def update_product(products):
                     product['quantity'] = int(q_input)
             except ValueError:
                 print("Lỗi nhập liệu số! Giữ nguyên giá trị cũ.")
+            # Sử dụng hàm phụ trợ để cập nhật giá và số lượng
+            product['price'] = _get_valid_int("Giá mới", product['price'])
+            product['quantity'] = _get_valid_int("Số lượng mới", product['quantity'])
 
             print("Cập nhật thành công!")
             break
