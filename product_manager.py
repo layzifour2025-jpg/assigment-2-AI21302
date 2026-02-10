@@ -64,15 +64,33 @@ def add_product(products):
     name = input("Nhập tên sản phẩm: ")
     brand = input("Nhập thương hiệu: ")
     
+   
+    while True:
+        try:
+            price = int(input("Nhập giá sản phẩm : "))
+            quantity = int(input("Nhập số lượng tồn kho : "))
+            if price < 0 or quantity < 0:
+                print("Giá và số lượng phải lớn hơn hoặc bằng 0.")
+                continue
+            break
+        except Exception:
+            print("Vui lòng nhập con số hợp lệ!")
     # Sử dụng hàm phụ trợ để code gọn và an toàn hơn
     price = _get_valid_int("Nhập giá sản phẩm: ")
     quantity = _get_valid_int("Nhập số lượng tồn kho: ")
 
+   
+    new_id = f"LT{len(products) + 1:02d}" 
+    
+ 
+    existing_ids = [p['id'] for p in products]
     # Tối ưu hóa sinh ID: dùng set để tra cứu nhanh O(1)
     existing_ids = {p['id'] for p in products}
     count = len(products) + 1
+    while new_id in existing_ids:
     while f"LT{count:02d}" in existing_ids:
         count += 1
+        new_id = f"LT{count:02d}"
     new_id = f"LT{count:02d}"
 
     new_product = {
@@ -104,6 +122,17 @@ def update_product(products):
             product['name'] = input(f"Tên mới ({product['name']}): ") or product['name']
             product['brand'] = input(f"Thương hiệu mới ({product['brand']}): ") or product['brand']
             
+       
+            try:
+                p_input = input(f"Giá mới ({product['price']}): ")
+                if p_input:
+                    product['price'] = int(p_input)
+                
+                q_input = input(f"Số lượng mới ({product['quantity']}): ")
+                if q_input:
+                    product['quantity'] = int(q_input)
+            except ValueError:
+                print("Lỗi nhập liệu số! Giữ nguyên giá trị cũ.")
             # Sử dụng hàm phụ trợ để cập nhật giá và số lượng
             product['price'] = _get_valid_int("Giá mới", product['price'])
             product['quantity'] = _get_valid_int("Số lượng mới", product['quantity'])
