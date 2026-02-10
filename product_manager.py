@@ -68,11 +68,6 @@ def add_product(products):
     price = _get_valid_int("Nhập giá sản phẩm: ")
     quantity = _get_valid_int("Nhập số lượng tồn kho: ")
 
-   
-    new_id = f"LT{len(products) + 1:02d}" 
-    
- 
-    existing_ids = [p['id'] for p in products]
     # Tối ưu hóa sinh ID: dùng set để tra cứu nhanh O(1)
     existing_ids = {p['id'] for p in products}
     count = len(products) + 1
